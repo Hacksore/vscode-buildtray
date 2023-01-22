@@ -1,0 +1,49 @@
+{
+  "name": "vscode-buildtray",
+  "displayName": "vscode-buildtray",
+  "description": "Github statuses",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:vscode-buildtray.helloWorld",
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-buildtray.helloWorld",
+        "title": "Hello World"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "rollup --environment NODE_ENV:production -c rollup.config.js",
+    "build": "rollup -c rollup.config.js",
+    "watch": "rollup -c rollup.config.js --watch",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/glob": "^8.0.0",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.72.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "glob": "^8.0.3",
+    "rollup": "^3.10.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "got": "^12.5.3"
+  }
+}
