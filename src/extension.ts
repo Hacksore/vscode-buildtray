@@ -1,5 +1,7 @@
 import * as vscode from "vscode";
-import { getLatestBuildStatus } from "./github";
+// import { getLatestBuildStatus } from "./github.js";
+import { getCurrentBranch, getCurrentCommit, getOwnerAndRepo } from "./git";
+import { getBuildStatus } from "./github";
 
 let myStatusBarItem: vscode.StatusBarItem;
 
@@ -18,8 +20,29 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
   myStatusBarItem.show();
 
   setInterval(async () => {
-    const data = getLatestBuildStatus();
+    const branch = getCurrentBranch();
+    const commit = getCurrentCommit();
+    const result = getOwnerAndRepo();
+    // console.log({
+    //   commit,
+    //   branch,
+    //   owner: result?.owner,
+    //   repo: result?.repo
+    // });
 
-    console.log(data);
+    if (!result || !commit) {
+      console.log("can't find git data or commit hash");
+      return;
+    }
+
+    const { owner, repo } = result;
+    // get action data
+    const repoData = await getBuildStatus({
+      owner,
+      repo,
+      commit
+    });
+
+    
   }, 5000);
 }

@@ -3,7 +3,7 @@
   "displayName": "vscode-buildtray",
   "description": "Github statuses",
   "version": "0.0.1",
-  "type": "commonjs",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.72.0"
   },
@@ -25,20 +25,25 @@
   },
   "scripts": {
     "vscode:prepublish": "rollup --environment NODE_ENV:production -c rollup.config.js",
-    "build": "rollup -c rollup.config.js",
-    "watch": "rollup -c rollup.config.js --watch",
+    "build": "rollup -c rollup.config.mjs",
+    "watch": "rollup -c rollup.config.mjs --watch",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/glob": "^8.0.0",
     "@types/node": "16.x",
     "@types/vscode": "^1.72.0",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
+    "esbuild": "^0.17.3",
     "eslint": "^8.24.0",
     "glob": "^8.0.3",
     "rollup": "^3.10.1",
+    "rollup-plugin-esbuild": "^5.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "ts-loader": "^9.4.1",
     "typescript": "^4.8.4"
