@@ -3,7 +3,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import esbuild from "rollup-plugin-esbuild";
 import json from "@rollup/plugin-json";
 
-import pkg from "./package.json" assert { type: "json" };
+// import pkg from "./package.json" assert { type: "json" };
 import tsConfig from "./tsconfig.json"  assert { type: "json" };
 
 const isProd = process.env.NODE_ENV === "production";
@@ -14,7 +14,8 @@ const isProd = process.env.NODE_ENV === "production";
 export default [
   {
     input: "src/extension.ts",
-    external: ["vscode", "firebase"],
+    // TODO: fix externals
+    external: ["vscode", "firebase", "firebase/app", "firebase/database"],
     output: {
       dir: "dist",
       format: "cjs",
