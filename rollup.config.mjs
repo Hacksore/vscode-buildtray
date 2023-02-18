@@ -14,7 +14,7 @@ const isProd = process.env.NODE_ENV === "production";
 export default [
   {
     input: "src/extension.ts",
-    external: ["vscode"],
+    external: ["vscode", "firebase"],
     output: {
       dir: "dist",
       format: "cjs",

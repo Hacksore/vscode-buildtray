@@ -1,8 +1,7 @@
 import * as vscode from "vscode";
-// import { getLatestBuildStatus } from "./github.js";
-import { getCurrentBranch, getCurrentCommit, getOwnerAndRepo } from "./git";
-import { getBuildStatus } from "./github";
+import firebaseService from "./firebase";
 
+// test a bar item
 let myStatusBarItem: vscode.StatusBarItem;
 
 export function activate({ subscriptions }: vscode.ExtensionContext) {
@@ -12,37 +11,22 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
     100
   );
 
-  myStatusBarItem.text = "Testing ok";
-  myStatusBarItem.backgroundColor = new vscode.ThemeColor("statusBarItem.errorBackground");
+  myStatusBarItem.text = "$(sync~spin) CI";
+  // myStatusBarItem.backgroundColor = new vscode.ThemeColor("statusBarItem.errorBackground");
   subscriptions.push(myStatusBarItem);
 
   // update status bar item once at start
   myStatusBarItem.show();
 
-  setInterval(async () => {
-    const branch = getCurrentBranch();
-    const commit = getCurrentCommit();
-    const result = getOwnerAndRepo();
-    // console.log({
-    //   commit,
-    //   branch,
-    //   owner: result?.owner,
-    //   repo: result?.repo
-    // });
+  getUserdata();
+}
 
-    if (!result || !commit) {
-      console.log("can't find git data or commit hash");
-      return;
-    }
-
-    const { owner, repo } = result;
-    // get action data
-    const repoData = await getBuildStatus({
-      owner,
-      repo,
-      commit
-    });
-
-    
-  }, 5000);
+async function getUserdata() {    
+  try {
+    console.log("In get info...");
+    console.log(await firebaseService.getData());
+  } catch (err) {
+    console.log("err get info...");
+    console.log(err);
+  }
 }
