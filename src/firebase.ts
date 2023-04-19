@@ -73,37 +73,6 @@ class FirebaseService extends EventEmitter {
     this.listeners.push(onChildChangedListener);
   }
 
-  /**
-   * Sorta don't know if this makes full sense to be a "service"
-   * @param fullName An org/repo name that exists in the databse
-   * @returns Promise<any[]>
-   */
-  getMostRecentBuilds(fullName: string): Promise<IBuildInfo[]> {
-    return new Promise(resolve => {
-      const buildPath = `repos/${encodeRepo(fullName)}/builds`;
-      const localRef = ref(database, buildPath);
-      const updatedRepo = query(localRef, orderByChild("createdAt"), limitToLast(5));
-
-      const listener = onValue(updatedRepo, (snapshot: DataSnapshot) => {
-        const val = snapshot.val();
-
-        if (!val) {
-          return resolve([]);
-        }
-
-        const fixed = Object.entries(val).map(([k, v]: [string, unknown]) => ({
-          id: k,
-          fullName,
-          ...(v as Record<string, unknown>),
-        }));
-
-        resolve(fixed.reverse() as IBuildInfo[]);
-      });
-
-      this.listeners.push(listener);
-    });
-  }
-
   clearAllListeners(): void {
     for (const listener of this.listeners) {
       listener();

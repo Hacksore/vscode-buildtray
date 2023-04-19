@@ -12,8 +12,7 @@ export async function activate({ subscriptions }: vscode.ExtensionContext) {
     100
   );
 
-
-  myStatusBarItem.text = "CI ✅";
+  myStatusBarItem.text = "$(pass-filled) CI";
   // myStatusBarItem.backgroundColor = new vscode.ThemeColor("statusBarItem.errorBackground");
   subscriptions.push(myStatusBarItem);
 
@@ -28,16 +27,14 @@ export async function activate({ subscriptions }: vscode.ExtensionContext) {
     }
 
     if (build.status === "completed" && build.conclusion === "failure") {
-      myStatusBarItem.text="$(markers-view-icon) CI Failure";
+      myStatusBarItem.text="$(error) CI";
       myStatusBarItem.backgroundColor = new vscode.ThemeColor("statusBarItem.errorBackground");
     }
 
     if (build.status === "completed" && build.conclusion === "success") {
-      myStatusBarItem.text="$(getting-started-item-checked) CI Success";
+      myStatusBarItem.text="$(pass-filled) CI";
       myStatusBarItem.backgroundColor = new vscode.ThemeColor("default");
     }
   });
-
-  console.log(await firebaseService.getMostRecentBuilds("Hacksore/test"));
 
 }
